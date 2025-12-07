@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       timestamp: ${{ steps.create-timestamp.outputs.timestamp }}
-
     steps:
       - name: Mostrar variables globales
         run: |
@@ -27,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_ENV: test
-
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -42,8 +40,7 @@ jobs:
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    # Para pruebas en cualquier rama, se puede usar:
-    if: ${{ always() }}
+    if: github.ref == 'refs/heads/main'  # Se ejecuta solo en main
     steps:
       - name: Desplegar aplicación
         env:
@@ -56,3 +53,4 @@ jobs:
           else
             echo "Secret configurada correctamente"
           fi
+
